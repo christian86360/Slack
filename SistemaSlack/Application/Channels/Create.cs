@@ -17,9 +17,9 @@ namespace Application.Channels
 
         }
 
-        public class Handler : IRequest<Command>
+        public class Handler : IRequestHandler<Command, Unit>
         {
-            private DataContext _context;
+            private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -36,7 +36,7 @@ namespace Application.Channels
 
                 _context.Channel.Add(channel);
 
-                var success = await _context.SaveChangesAsync() > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success)
                     return Unit.Value;
@@ -44,5 +44,7 @@ namespace Application.Channels
                 throw new Exception("Ocurrió un problema al guardar los datos");
             }
         }
+
     }
 }
+

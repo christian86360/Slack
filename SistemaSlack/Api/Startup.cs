@@ -32,9 +32,8 @@ namespace Api
 
             services.AddControllers();
 
-           services.AddMediatR(typeof(Create.Command).Assembly);
+            services.AddMediatR(typeof(Create.Handler).Assembly);
 
-          
 
 
 
