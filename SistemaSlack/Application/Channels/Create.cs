@@ -1,4 +1,5 @@
 ﻿using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 using System;
@@ -15,6 +16,16 @@ namespace Application.Channels
             public string Name { get; set; }
             public string Descripcion { get; set; }
 
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x=>x.Name).NotEmpty();
+                RuleFor(x => x.Descripcion).NotEmpty(); 
+
+            }
         }
 
         public class Handler : IRequestHandler<Command, Unit>
